@@ -9,6 +9,12 @@ char-7: ""
 char-8: ""
 char-9: ""
 char-0: ""
-ruby-bank-menu: "Ruby Exchange Menu"
+ruby-bank-menu: "§f:offset_-8:"
 ruby-itemsadder-namespacedid: "ores:ruby"
-ruby-bank-size: 9
+ruby-bank-size: 27
+ruby-bank-working-slots:
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15

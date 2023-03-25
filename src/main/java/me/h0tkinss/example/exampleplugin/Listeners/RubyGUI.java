@@ -22,9 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 
 public class RubyGUI implements Listener
@@ -53,6 +51,10 @@ public class RubyGUI implements Listener
                 ItemStack item = e.getCursor();
                 Integer amount = item.getAmount();
                 CustomStack cs = CustomStack.byItemStack(item);
+                List<Integer> workingSlots = plugin.getConfig().getIntegerList("ruby-bank-working-slots");
+                if (!workingSlots.contains(clickedSlot)) {
+                    return;
+                }
                 if (cs != null && cs.getNamespacedID().equals(plugin.getConfig().getString("ruby-itemsadder-namespacedid"))){
                     plugin.getPpAPI().give(p.getUniqueId(), amount);
                     p.setItemOnCursor(null);
@@ -68,9 +70,29 @@ public class RubyGUI implements Listener
         if(!targetMap.contains(e.getWhoClicked())){
             return;
         } else {
+            Inventory inv = e.getInventory();
+            Integer size = inv.getSize();
+            Set<Integer> slots = e.getRawSlots();
+            for (Integer slot : slots){
+                if (slot > size) {
+                    return;
+                }
+            }
             e.setCancelled(true);
+//            ItemStack item = e.getOldCursor();
+//            CustomStack cs = CustomStack.byItemStack(item);
+//            if (cs != null && cs.getNamespacedID().equals(plugin.getConfig().getString("ruby-itemsadder-namespacedid"))){
+//                for (Integer slot : slots){
+//                    if (!(slot > 11 && slot < 16)) {
+//                        return;
+//                    }
+//                }
+//                Integer amount = item.getAmount();
+//                Player p = (Player) e.getWhoClicked();
+//                plugin.getPpAPI().give(p.getUniqueId(), amount);
+//                item.setType(Material.AIR);
+            }
         }
-    }
     @EventHandler
     public void onInventoryClosed(InventoryCloseEvent event) {
         targetMap.remove(event.getPlayer());

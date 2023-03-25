@@ -35,6 +35,7 @@ public class RubyBank implements CommandExecutor {
                 if (PlayerData.isExistingPlayer(player)) {
                     targetMap.add(player);
                     FileConfiguration config = plugin.getConfig();
+                    // To do: Check if inventory size is valid
                     Inventory inv = Bukkit.createInventory(null, config.getInt("ruby-bank-size"),config.getString("ruby-bank-menu"));
                     player.openInventory(inv);
                 }
