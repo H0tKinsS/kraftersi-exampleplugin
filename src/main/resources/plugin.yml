@@ -1,0 +1,13 @@
+name: ExamplePlugin
+version: '${project.version}'
+main: me.h0tkinss.example.exampleplugin.ExamplePlugin
+api-version: 1.18
+authors: [ H0tKinsS ]
+description: My example plugin made with maven
+commands:
+  examplecommand:
+    usage: /<command>
+    description: Example description
+  rubybank:
+    usage: /<command>
+    description: Example description
