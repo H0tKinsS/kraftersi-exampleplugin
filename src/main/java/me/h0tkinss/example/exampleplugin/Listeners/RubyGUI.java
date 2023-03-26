@@ -2,6 +2,8 @@ package me.h0tkinss.example.exampleplugin.Listeners;
 
 import dev.lone.itemsadder.api.CustomStack;
 import me.h0tkinss.example.exampleplugin.ExamplePlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -57,19 +59,56 @@ public class RubyGUI implements Listener
             }
 
         }
+    }
 
-    }    @EventHandler
+    private boolean checkIfInWorkingSlots(Set<Integer> slots, List<Integer> workingSlots) {
+        List<Boolean> temp = new ArrayList<>();
+        for (int slot : slots) {
+            if (!workingSlots.contains(slot)) temp.add(false);
+            else temp.add(true);
+        }
+        return !temp.contains(false);
+    }
+    private boolean checkIfInGUI(Set<Integer> slots, int size){
+        List<Boolean> temp = new ArrayList<>();
+        for (int slot : slots)
+            if (slot > size) temp.add(false);
+        else temp.add(true);
+        if (temp.contains(true)) return true;
+        else return false;
+    }
+    @EventHandler
     public void onInventoryDragEvent(InventoryDragEvent e) {
-        if(!targetMap.contains(e.getWhoClicked())) return;
+        if (!(e.getWhoClicked() instanceof Player)) return;
+        Player p = (Player) e.getWhoClicked();
+        if(!targetMap.contains(p)) return;
         Inventory inv = e.getInventory();
-        Integer size = inv.getSize();
+        int size = inv.getSize();
         Set<Integer> slots = e.getRawSlots();
-        for (Integer slot : slots){
-            if (slot < size) {
+        List<Integer> workingSlots = plugin.getConfig().getIntegerList("ruby-bank-working-slots");
+        if (!plugin.getConfig().getBoolean("enableRubyBankDragToDeposit")) {
+            if (checkIfInGUI(slots, size)) {
+                e.setCancelled(true);
+            }
+            return;
+        }
+        if (checkIfInGUI(slots, size)){
+            if (!checkIfInWorkingSlots(slots, workingSlots)){
                 e.setCancelled(true);
                 return;
             }
+            e.setCancelled(true);
+            ItemStack item = e.getOldCursor();
+            CustomStack cs = CustomStack.byItemStack(item);
+            if (cs != null && cs.getNamespacedID().equals(plugin.getConfig().getString("ruby-itemsadder-namespacedid"))) {
+                int amount = item.getAmount();
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    p.setItemOnCursor(null);
+                    plugin.getPpAPI().give(p.getUniqueId(), amount);
+                }, 1);
+            }
         }
+
 //            ItemStack item = e.getOldCursor();
 //            CustomStack cs = CustomStack.byItemStack(item);
 //            if (cs != null && cs.getNamespacedID().equals(plugin.getConfig().getString("ruby-itemsadder-namespacedid"))){
@@ -83,6 +122,7 @@ public class RubyGUI implements Listener
 //                plugin.getPpAPI().give(p.getUniqueId(), amount);
 //                item.setType(Material.AIR);
             }
+
 
     @EventHandler
     public void onInventoryClosed(InventoryCloseEvent event) {

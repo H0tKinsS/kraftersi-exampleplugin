@@ -9,6 +9,7 @@ char-7: ""
 char-8: ""
 char-9: ""
 char-0: ""
+enableRubyBankDragToDeposit: false
 ruby-bank-menu: "§f:offset_-8:"
 ruby-itemsadder-namespacedid: "ores:ruby"
 ruby-bank-size: 27

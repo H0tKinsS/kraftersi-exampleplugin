@@ -2,7 +2,7 @@ package me.h0tkinss.example.exampleplugin;
 
 import me.h0tkinss.example.exampleplugin.Commands.ExampleCommand;
 import me.h0tkinss.example.exampleplugin.Commands.RubyBank;
-import me.h0tkinss.example.exampleplugin.Listeners.PlaceholderRequest;
+import me.h0tkinss.example.exampleplugin.Listeners.RubyBankPAPI;
 import me.h0tkinss.example.exampleplugin.Listeners.PlayerJoin;
 import me.h0tkinss.example.exampleplugin.Listeners.RubyGUI;
 import org.black_ixx.playerpoints.PlayerPoints;
@@ -26,12 +26,6 @@ public final class ExamplePlugin extends JavaPlugin {
     }
 
     public static ExamplePlugin plugin;
-    private FileConfiguration config;
-
-    @Override
-    public FileConfiguration getConfig() {
-        return super.getConfig();
-    }
 
     @Override
     public void onEnable() {
@@ -39,10 +33,9 @@ public final class ExamplePlugin extends JavaPlugin {
             this.ppAPI = PlayerPoints.getInstance().getAPI();
         }
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new PlaceholderRequest(this).register();
+            new RubyBankPAPI(this).register();
         }
         PluginManager pm = Bukkit.getPluginManager();
-        config = getConfig();
         // Plugin startup logic
         plugin = this;
         saveDefaultConfig();
