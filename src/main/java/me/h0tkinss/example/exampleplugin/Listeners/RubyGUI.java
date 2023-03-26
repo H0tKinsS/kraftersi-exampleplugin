@@ -65,11 +65,11 @@ public class RubyGUI implements Listener
         Integer size = inv.getSize();
         Set<Integer> slots = e.getRawSlots();
         for (Integer slot : slots){
-            if (slot > size) {
+            if (slot < size) {
+                e.setCancelled(true);
                 return;
             }
         }
-        e.setCancelled(true);
 //            ItemStack item = e.getOldCursor();
 //            CustomStack cs = CustomStack.byItemStack(item);
 //            if (cs != null && cs.getNamespacedID().equals(plugin.getConfig().getString("ruby-itemsadder-namespacedid"))){
