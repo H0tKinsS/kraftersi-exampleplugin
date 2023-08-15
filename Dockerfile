@@ -6,5 +6,6 @@ RUN apt-get update \
   && ls \
   && cd /etc/exampleplugin/ \
   && ls
+RUN mvn clean package
 # common for all images
 ENV MAVEN_HOME /usr/share/maven
