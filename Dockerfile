@@ -1,7 +1,7 @@
 FROM maven:3-openjdk-17
 ADD . /etc/exampleplugin/
-RUN apt-get update \
-  && apt-get install -y ca-certificates curl git --no-install-recommends \
+RUN apt update \
+  && apt install -y ca-certificates curl git --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 RUN cd /etc/exampleplugin/ \
   && mvn clean package
