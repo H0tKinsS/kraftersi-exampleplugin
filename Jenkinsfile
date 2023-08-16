@@ -5,13 +5,14 @@ pipeline {
       steps {  // no container directive is needed as the maven container is the default
         sh '''
             ls
+            mvn clean package
         '''
       }
     }
   }
   post {
       always {
-          archiveArtifacts artifacts: 'ExamplePlugin-1.0-SNAPSHOT.jar', fingerprint: true
+          archiveArtifacts artifacts: '/target/ExamplePlugin-1.0-SNAPSHOT.jar', fingerprint: true
         }
     }
 }
