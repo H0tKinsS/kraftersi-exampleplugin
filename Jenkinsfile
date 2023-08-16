@@ -12,7 +12,7 @@ pipeline {
   }
   post {
       always {
-          archiveArtifacts artifacts: '/target/ExamplePlugin-1.0-SNAPSHOT.jar', fingerprint: true
+          archiveArtifacts artifacts: 'target/ExamplePlugin-1.0-SNAPSHOT.jar', fingerprint: true
         }
     }
 }
