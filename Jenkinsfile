@@ -13,6 +13,12 @@ pipeline {
   post {
       always {
           archiveArtifacts artifacts: 'target/ExamplePlugin-1.0-SNAPSHOT.jar', fingerprint: true
+          cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
         }
     }
 }
