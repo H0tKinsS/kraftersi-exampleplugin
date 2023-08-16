@@ -1,4 +1,4 @@
-FROM adoptopenjdk/maven-openjdk17:latest
+FROM maven:3-openjdk-17
 ADD . /etc/exampleplugin/
 RUN apt-get update \
   && apt-get install -y ca-certificates curl git --no-install-recommends \
