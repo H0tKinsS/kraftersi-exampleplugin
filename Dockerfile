@@ -2,10 +2,7 @@ FROM eclipse-temurin:17-jdk
 ADD . /etc/exampleplugin/
 RUN apt-get update \
   && apt-get install -y ca-certificates curl git --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/* \
-  && ls \
-  && cd /etc/exampleplugin/ \
-  && ls
+  && rm -rf /var/lib/apt/lists/*
 RUN wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
   && tar -xvf apache-maven-3.6.3-bin.tar.gz \
   && mv apache-maven-3.6.3 /opt/ \
@@ -13,5 +10,7 @@ RUN wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apa
   && PATH="$M2_HOME/bin:$PATH" \
   && export PATH \
   && mvn -version
+RUN cd /etc/exampleplugin/ \
+  && mvn clean package
 # common for all images
 ENV MAVEN_HOME /usr/share/maven
