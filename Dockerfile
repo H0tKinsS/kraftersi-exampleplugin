@@ -12,6 +12,6 @@ RUN wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apa
   && M2_HOME='/opt/apache-maven-3.6.3' \
   && PATH="$M2_HOME/bin:$PATH" \
   && export PATH \
-  && mvn --version
+  && mvn -version
 # common for all images
 ENV MAVEN_HOME /usr/share/maven
